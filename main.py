@@ -1,14 +1,13 @@
-from observable import Observable
-from observer import ChildObserver
+from observable import Producer
+from observer import ConsumerA
+from observer import ConsumerB
 
 
 if __name__ == '__main__':
-    producer = Observable()
+    producer = Producer()
 
-    consumer_1 = ChildObserver(producer, 'Tom')
-    consumer_2 = ChildObserver(producer, 'Jerry')
-    consumer_3 = ChildObserver(producer, 'Jin')
+    # Register your consumer!
+    ConsumerA(producer)
+    ConsumerB(producer)
 
     producer.start()
-
-

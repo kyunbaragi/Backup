@@ -3,11 +3,11 @@ import os
 import time
 
 
-class Observer(metaclass=ABCMeta):
-    def __init__(self, producer, name):
-        self.producer = producer
+class Consumer(metaclass=ABCMeta):
+    def __init__(self, producer, name, members):
         self.name = name
-        producer.register_observer(self)
+        self.members = members
+        producer.add_consumer(self)
 
     def run(self):
         while True:
@@ -15,21 +15,28 @@ class Observer(metaclass=ABCMeta):
             time.sleep(3)
 
     @abstractmethod
-    def update(self, issue):
+    def handle_event(self, event):
         pass
 
 
-class ChildObserver(Observer):
-    def __init__(self, producer, name):
-        super().__init__(producer, name)
+class ConsumerA(Consumer):
+    def __init__(self, producer):
+        name = 'ConsumerA'
+        members = ['yunkyun.han', 'yunkyun.kim', 'yunkyun.lee']
+        super().__init__(producer, name, members)
 
-    def update(self, issue):
-        # Get contents of the issue which you want!.
-        issue_id = issue.id
-        issue_title = issue.title
-        issue_desc = issue.description
+    def handle_event(self, event):
+        print('Analyze ' + event)
 
-        print('Analyze' + issue_id)
+
+class ConsumerB(Consumer):
+    def __init__(self, producer):
+        name = 'ConsumerB'
+        members = ['dinggul.han', 'dinggul.kim']
+        super().__init__(producer, name, members)
+
+    def handle_event(self, event):
+        print('Analyze ' + event)
 
 
 

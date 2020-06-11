@@ -1,18 +1,24 @@
-class SimpleRequests:
+class MyRequests:
     def __init__(self):
         pass
 
     def login(self, user_id, password):
         pass
 
+    def logout(self):
+        pass
+
+    def keep_session(self):
+        pass
+
     def scan(self, user_id):
         pass
 
-    def make_comment(self):
+    def comment(self, event_id):
         pass
 
-    def resolve_issue(self):
+    def assign(self):
         pass
 
-    def assign_issue(self):
+    def resolve(self):
         pass

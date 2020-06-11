@@ -1,50 +1,36 @@
 import os
 import time
 from multiprocessing import Process
-from simplerequests import SimpleRequests
+from myrequests import MyRequests
 
 
-class Observable:
+class Producer:
     def __init__(self):
-        self.observers = []
-        self.child_process = []
-        self.requests = SimpleRequests()
+        self._consumers = []
+        self._requests = MyRequests()
 
-    def register_observer(self, o):
-        self.observers.append(o)
-
-    def unregister_observer(self, o):
-        i = self.observers.index(o)
-        self.observers.remove(i)
-
-    def fork_observers(self):
-        for o in self.observers:
-            proc = Process(target=o.run, name=o.name, daemon=True)
-            self.child_process.append(proc)
-            proc.start()
-
-        # for proc in self.child_process:
-        #     proc.join()
-
-    def iterate_cycle(self):
-        for o in self.observers:
-            group_issues = []
-            for member in o.members:
-                member_issues = self.requests.scan(member)
-                if member_issues:
-                    group_issues.append(member_issues)
-
-            # Call observer's callback
-            o.update(group_issues)
+    def add_consumer(self, consumer):
+        self._consumers.append(consumer)
 
     def start(self):
-        self.fork_observers()
+        self._fork_consumers()
 
+        # TODO: Start scanner and result handler threads.
         while True:
             print('Hello! I am PRODUCER of the PID {}'.format(os.getpid()))
             time.sleep(1)
 
+    def _fork_consumers(self):
+        for consumer in self._consumers:
+            proc = Process(target=consumer.run,
+                           name=consumer.name,
+                           daemon=True)
+            proc.start()
 
-
-
-
+    def _notify_events(self):
+        for consumer in self._consumers:
+            for member in consumer.members:
+                events = self._requests.scan(member)
+                if events:
+                    # TODO: Put events into multiprocessing queue.
+                    pass
