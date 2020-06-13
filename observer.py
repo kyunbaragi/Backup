@@ -7,12 +7,20 @@ class Consumer(metaclass=ABCMeta):
     def __init__(self, producer, name, members):
         self.name = name
         self.members = members
+
+        # Register 'this' new observer.
         producer.add_consumer(self)
 
-    def run(self):
+    def run(self, event_queue, result_queue):
+        print('[PID {}] Hello! I am {}'.format(os.getpid(), self.name))
         while True:
-            print('Hello! I am {} of the PID {}'.format(self.name, os.getpid()))
-            time.sleep(3)
+            # Use one-way blocking queue,
+            # You don't need to handle process scheduling.
+            event = event_queue.get()
+            result = self.handle_event(event)
+
+            # Return result to Producer.
+            result_queue.put(result)
 
     @abstractmethod
     def handle_event(self, event):
@@ -26,7 +34,8 @@ class ConsumerA(Consumer):
         super().__init__(producer, name, members)
 
     def handle_event(self, event):
-        print('Analyze ' + event)
+        print('[PID {}] Analyze {}'.format(os.getpid(), event.id))
+        return None
 
 
 class ConsumerB(Consumer):
@@ -36,7 +45,8 @@ class ConsumerB(Consumer):
         super().__init__(producer, name, members)
 
     def handle_event(self, event):
-        print('Analyze ' + event)
+        print('[PID {}] Analyze {}'.format(os.getpid(), event.id))
+        return None
 
 
 

@@ -1,3 +1,5 @@
+from event import Event
+
 class MyRequests:
     def __init__(self):
         pass
@@ -11,8 +13,15 @@ class MyRequests:
     def keep_session(self):
         pass
 
-    def scan(self, user_id):
+    def scan_events(self, user_id):
         pass
+
+    def construct_event(self, event_id):
+        _id = event_id
+        title = 'Title'
+        description = 'Description'
+        download_path = 'Download Path'
+        return Event(_id, title, description, download_path)
 
     def comment(self, event_id):
         pass
