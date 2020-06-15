@@ -7,7 +7,9 @@ from myrequests import MyRequests
 
 
 class Producer:
-    def __init__(self):
+    def __init__(self, args):
+        self._args = args
+
         self._consumers = {}
         self._event_queues = {}         # Events from Producer to Consumer
         self._result_queue = Queue()    # Results from Consumer to Producer
@@ -55,7 +57,7 @@ class Producer:
                             event_queue.put(event)
             # one cycle--
 
-            time.sleep(5)
+            time.sleep(self._args.cycle_secs)
 
     def _runnable_result_handler(self):
         while True:
