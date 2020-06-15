@@ -48,7 +48,7 @@ class Producer:
                     # TODO: Create virtual test logic like real scenario.
                     # event_ids = self._requests.scan_events(member)
 
-                    event_ids = ['EVENT_0', 'EVENT_1', 'EVENT_2', 'EVENT_3']
+                    event_ids = ['EVENT_0', 'EVENT_1']
                     if event_ids:
                         for event_id in event_ids:
                             event = self._requests.construct_event(event_id)
@@ -58,4 +58,6 @@ class Producer:
             time.sleep(5)
 
     def _runnable_result_handler(self):
-        pass
+        while True:
+            result = self._result_queue.get()
+            print('[PID {}] Handle Result {}'.format(os.getpid(), result))
