@@ -1,3 +1,4 @@
+from config import CONFIG
 from argparse import ArgumentParser
 from observable import Producer
 from observer import ConsumerA
@@ -8,10 +9,12 @@ def parse_arguments():
     parser = ArgumentParser()
     parser.add_argument('--debug',
                         help='Run as DEBUG mode',
-                        action='store_true', dest='debug', default=False)
+                        action='store_true', dest='debug',
+                        default=CONFIG['DEFAULT']['DEBUG'])
     parser.add_argument('--cycle', type=int,
                         help='CYCLE of the event scanner',
-                        action='store', dest='cycle_secs', default=30)
+                        action='store', dest='cycle_secs',
+                        default=CONFIG['DEFAULT']['CYCLE'])
     return parser.parse_args()
 
 

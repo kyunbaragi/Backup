@@ -139,3 +139,6 @@ cython_debug/
 
 # Directory created by PyCharm
 .idea/
+
+# Private config file
+config.ini

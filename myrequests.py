@@ -1,11 +1,15 @@
 from event import Event
 
+
 class MyRequests:
     def __init__(self):
         pass
 
     def login(self, user_id, password):
-        pass
+        if isinstance(user_id, str) and isinstance(password, str):
+            print('Login ', user_id)
+        else:
+            raise ValueError('Invalid parameters!')
 
     def logout(self):
         pass

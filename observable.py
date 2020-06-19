@@ -1,5 +1,6 @@
 import os
 import time
+from config import CONFIG
 from multiprocessing import Process
 from multiprocessing import Queue
 from threading import Thread
@@ -26,6 +27,10 @@ class Producer:
         # TODO: Should kill consumer process?
 
     def start(self):
+        self._requests.login(CONFIG['ACCOUNT']['ID'],
+                             CONFIG['ACCOUNT']['PASSWORD'])
+
+        # Fork new process for registered analyzers
         self._fork_consumers()
 
         # In the Producer process...
