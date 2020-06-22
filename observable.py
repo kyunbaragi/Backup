@@ -1,5 +1,6 @@
 import os
 import time
+from mylogger import Log
 from config import CONFIG
 from multiprocessing import Process
 from multiprocessing import Queue
@@ -60,6 +61,7 @@ class Producer:
                         for event_id in event_ids:
                             event = self._requests.construct_event(event_id)
                             event_queue.put(event)
+                            Log.d('EventScanner', 'Send {} to {}'.format(event_id, c.name))
             # one cycle--
 
             time.sleep(self._args.cycle_secs)
@@ -67,4 +69,4 @@ class Producer:
     def _runnable_result_handler(self):
         while True:
             result = self._result_queue.get()
-            print('[PID {}] Handle Result {}'.format(os.getpid(), result))
+            Log.d('ResultHandler', 'Handle {}'.format(result))

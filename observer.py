@@ -1,6 +1,5 @@
 from abc import *
-import os
-import time
+from mylogger import Log
 
 
 class Consumer(metaclass=ABCMeta):
@@ -12,7 +11,7 @@ class Consumer(metaclass=ABCMeta):
         producer.add_consumer(self)
 
     def run(self, event_queue, result_queue):
-        print('[PID {}] Hello! I am {}'.format(os.getpid(), self.name))
+        Log.d('Consumer', 'Hello! I am {}'.format(self.name))
         while True:
             # Use one-way blocking queue,
             # You don't need to handle process scheduling.
@@ -34,7 +33,7 @@ class ConsumerA(Consumer):
         super().__init__(producer, name, members)
 
     def handle_event(self, event):
-        print('[PID {}] Analyze {}'.format(os.getpid(), event.id))
+        Log.d('ConsumerA', 'Receive {}'.format(event.id))
         return None
 
 
@@ -45,7 +44,7 @@ class ConsumerB(Consumer):
         super().__init__(producer, name, members)
 
     def handle_event(self, event):
-        print('[PID {}] Analyze {}'.format(os.getpid(), event.id))
+        Log.d('ConsumerB', 'Receive {}'.format(event.id))
         return None
 
 

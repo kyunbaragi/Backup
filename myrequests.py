@@ -6,10 +6,11 @@ class MyRequests:
         pass
 
     def login(self, user_id, password):
-        if isinstance(user_id, str) and isinstance(password, str):
-            print('Login ', user_id)
-        else:
+        if not isinstance(user_id, str)\
+                or not isinstance(password, str):
             raise ValueError('Invalid parameters!')
+
+        print('Login Success!', user_id)
 
     def logout(self):
         pass
