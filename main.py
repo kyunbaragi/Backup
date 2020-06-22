@@ -1,3 +1,4 @@
+from mylogger import *
 from config import CONFIG
 from argparse import ArgumentParser
 from observable import Producer
@@ -11,14 +12,16 @@ def parse_arguments():
                         help='Run as DEBUG mode',
                         action='store_true', dest='debug',
                         default=CONFIG['DEFAULT']['DEBUG'])
-    parser.add_argument('--cycle', type=int,
+    parser.add_argument('--cycle',
                         help='CYCLE of the event scanner',
-                        action='store', dest='cycle_secs',
+                        type=int, action='store', dest='cycle_secs',
                         default=CONFIG['DEFAULT']['CYCLE'])
     return parser.parse_args()
 
 
 if __name__ == '__main__':
+    Log.init(level=DEBUG, format='%(asctime)s %(process)d %(name)s %(levelname)s %(message)s')
+
     args = parse_arguments()
     producer = Producer(args)
 
@@ -26,4 +29,4 @@ if __name__ == '__main__':
     ConsumerA(producer)
     ConsumerB(producer)
 
-    producer.start()
+    # producer.start()
