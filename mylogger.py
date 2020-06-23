@@ -43,4 +43,3 @@ class Log:
         # getLogger(...) returns unique object for each tag parameter
         # The tag and logger are one-to-one
         return logging.getLogger(tag)
-

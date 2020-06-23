@@ -29,4 +29,4 @@ if __name__ == '__main__':
     ConsumerA(producer)
     ConsumerB(producer)
 
-    producer.start()
+    # producer.start()
