@@ -18,7 +18,7 @@ class MyRequests:
     def keep_session(self):
         pass
 
-    def scan_events(self, user_id):
+    def scan_current_events(self, user_id):
         pass
 
     def construct_event(self, event_id):

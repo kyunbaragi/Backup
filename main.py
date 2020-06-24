@@ -2,8 +2,7 @@ from mylogger import Log
 from config import CONFIG
 from argparse import ArgumentParser
 from observable import Producer
-from observer import ConsumerA
-from observer import ConsumerB
+from observer import ConsumerA, ConsumerB
 
 
 def parse_arguments():
